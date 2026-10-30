@@ -1,0 +1,11 @@
+{
+  "name": "CA Inter Study Hub",
+  "short_name": "CA Inter",
+  "description": "Link tree for the ICAI CA Intermediate study material, with progress tracking.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f7f9",
+  "theme_color": "#143868",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

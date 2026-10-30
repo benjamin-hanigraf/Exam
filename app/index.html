@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CA Inter Study Hub</title>
+  <meta name="description" content="Link tree for the ICAI CA Intermediate study material, with progress tracking.">
+  <meta name="theme-color" content="#143868">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <h1>CA Inter Study Hub</h1>
+      <p class="sub" id="edition"></p>
+      <div class="tools">
+        <input id="q" type="search" placeholder="Search chapters, topics, outcomes…" aria-label="Search the study material" autocomplete="off">
+        <button id="toggle" type="button">Expand all</button>
+      </div>
+      <p class="sub" id="overall" aria-live="polite"></p>
+    </div>
+  </header>
+
+  <main class="wrap" id="tree" aria-label="Study material">
+    <p class="empty">Loading…</p>
+  </main>
+
+  <noscript><p class="wrap">This app needs JavaScript.</p></noscript>
+  <script src="app.js"></script>
+</body>
+</html>
