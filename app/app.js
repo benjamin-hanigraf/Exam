@@ -74,6 +74,7 @@ function render(data) {
   const chapters = []; // {el, text, pages, id}
   const bars = [];     // progress updaters
   const groups = new Map();
+  const byId = new Map();
 
   for (const paper of data.papers) {
     if (!groups.has(paper.group)) {
@@ -111,11 +112,7 @@ function render(data) {
             h("span", { class: "name", text: chapterLabel(ch) }),
             h("br"), h("span", { class: "meta", text: `${ch.pages} pages` }))));
         box.addEventListener("click", (e) => e.stopPropagation());
-        box.addEventListener("change", () => {
-          box.checked ? done.add(id) : done.delete(id);
-          cEl.classList.toggle("done", box.checked);
-          saveDone(); updateProgress();
-        });
+        box.addEventListener("change", () => setDone(id, box.checked));
         let built = false;
         cEl.addEventListener("toggle", () => {
           if (cEl.open && !built) { built = true; cEl.append(buildChapterBody(ch)); }
@@ -125,7 +122,7 @@ function render(data) {
           ...ch.files.flatMap((f) => [f.title, ...(f.sections || []).map((s) => s.title), ...(f.outcomes || [])])]
           .filter(Boolean).join(" ").toLowerCase();
         const rec = { el: cEl, mod: mEl, paper: pEl, group: groups.get(paper.group), text, pages: ch.pages, box };
-        chapters.push(rec); mine.push(rec);
+        chapters.push(rec); mine.push(rec); byId.set(id, rec);
       }
       pBody.append(mEl);
     }
@@ -152,6 +149,18 @@ function render(data) {
       `${n} of ${chapters.length} chapters done · ${total ? Math.round((100 * pg) / total) : 0}% of ${total.toLocaleString()} pages`;
   }
   updateProgress();
+
+  // Single place that changes a chapter's done state, so Library and Plan stay in sync.
+  function setDone(id, value) {
+    const r = byId.get(id);
+    if (!r) return;
+    value ? done.add(id) : done.delete(id);
+    r.box.checked = value;
+    r.el.classList.toggle("done", value);
+    saveDone(); updateProgress();
+    document.dispatchEvent(new Event("cainter:done"));
+  }
+  if (typeof initPlan === "function") initPlan(data, { done, chapterId, pdfHref, setDone });
 
   // Search: hide non-matching chapters, hide empty parents, open the path to every match.
   $("#q").addEventListener("input", (e) => {
@@ -190,3 +199,17 @@ fetch("data/syllabus.json")
 if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
   navigator.serviceWorker.register("sw.js").catch(() => {});
 }
+
+// Tabs: Plan and Library. The last-used tab is remembered.
+function showTab(name) {
+  const plan = name === "plan";
+  $("#plan").hidden = !plan; $("#tree").hidden = plan; $("#libtools").hidden = plan;
+  $("#tab-plan").setAttribute("aria-selected", String(plan));
+  $("#tab-lib").setAttribute("aria-selected", String(!plan));
+  try { localStorage.setItem("ca-inter-tab", name); } catch (_) { /* ignore */ }
+}
+$("#tab-plan").addEventListener("click", () => showTab("plan"));
+$("#tab-lib").addEventListener("click", () => showTab("lib"));
+let startTab = "lib";
+try { startTab = localStorage.getItem("ca-inter-tab") || "lib"; } catch (_) { /* ignore */ }
+showTab(startTab);

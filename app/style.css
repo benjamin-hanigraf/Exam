@@ -66,3 +66,34 @@ ul.outcomes { margin: 4px 0 0; padding-left: 20px; font-size: .92rem; }
 .nested > summary { font-size: .88rem; color: var(--muted); padding: 2px 0; }
 .empty { color: var(--muted); text-align: center; padding: 32px 0; }
 [hidden] { display: none !important; }
+
+.tabs { display: flex; gap: 6px; margin-top: 10px; }
+.tabs button { flex: 1; font-weight: 600; }
+.tabs button[aria-selected="true"] { color: #fff; background: var(--brand); border-color: var(--brand); }
+:root[data-theme="dark"] .tabs button[aria-selected="true"] { color: #0f141b; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tabs button[aria-selected="true"] { color: #0f141b; } }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px; margin: 0 0 12px; }
+.card h2 { margin: 0 0 8px; font-size: 1.05rem; color: var(--brand); }
+.card p { margin: 6px 0; }
+.form { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+.form label { display: flex; flex-direction: column; gap: 4px; font-size: .82rem; color: var(--muted); }
+input[type=number], input[type=date], select { font: inherit; padding: 8px; color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; min-width: 0; }
+.verdict.ok { border-left: 4px solid var(--done); }
+.verdict.bad { border-left: 4px solid #c0392b; }
+.verdict.bad h2 { color: #c0392b; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .verdict.bad h2 { color: #ff8a7a; } }
+.day { margin: 10px 0; }
+.dh { font-weight: 600; border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+.task { display: flex; gap: 10px; align-items: flex-start; padding: 6px 0; }
+.task input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--done); flex: none; }
+.task .tt { flex: 1; min-width: 0; }
+.task .rev { font-style: italic; }
+.paperplan { border-top: 1px solid var(--line); margin: 0; }
+.paperplan > summary { padding: 10px 0; }
+.pc { font-weight: 700; color: var(--brand); }
+.badge { font-size: .7rem; font-weight: 700; padding: 1px 6px; border-radius: 10px; text-transform: uppercase; }
+.badge.okb { color: #fff; background: var(--done); }
+.badge.late { color: #fff; background: #c0392b; }
+label.scope { display: flex; gap: 8px; align-items: flex-start; padding: 4px 0; font-size: .92rem; }
+label.scope input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--accent); flex: none; }

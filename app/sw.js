@@ -1,6 +1,6 @@
 // Offline shell: cache the app files and syllabus. PDFs (220+ MB) are intentionally not cached.
-const CACHE = "ca-inter-shell-v1";
-const SHELL = ["./", "index.html", "style.css", "app.js", "icon.svg", "manifest.webmanifest", "data/syllabus.json"];
+const CACHE = "ca-inter-shell-v2";
+const SHELL = ["./", "index.html", "style.css", "app.js", "plan.js", "icon.svg", "manifest.webmanifest", "data/syllabus.json"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));

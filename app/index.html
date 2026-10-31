@@ -15,7 +15,11 @@
     <div class="wrap">
       <h1>CA Inter Study Hub</h1>
       <p class="sub" id="edition"></p>
-      <div class="tools">
+      <nav class="tabs" role="tablist" aria-label="Views">
+        <button type="button" role="tab" id="tab-plan" aria-controls="plan" aria-selected="false">Plan</button>
+        <button type="button" role="tab" id="tab-lib" aria-controls="tree" aria-selected="true">Library</button>
+      </nav>
+      <div class="tools" id="libtools">
         <input id="q" type="search" placeholder="Search chapters, topics, outcomes…" aria-label="Search the study material" autocomplete="off">
         <button id="toggle" type="button">Expand all</button>
       </div>
@@ -23,11 +27,13 @@
     </div>
   </header>
 
-  <main class="wrap" id="tree" aria-label="Study material">
-    <p class="empty">Loading…</p>
+  <main class="wrap">
+    <div id="plan" role="tabpanel" aria-labelledby="tab-plan" hidden></div>
+    <div id="tree" role="tabpanel" aria-labelledby="tab-lib" aria-label="Study material"><p class="empty">Loading…</p></div>
   </main>
 
   <noscript><p class="wrap">This app needs JavaScript.</p></noscript>
+  <script src="plan.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
